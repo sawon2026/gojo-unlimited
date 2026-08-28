@@ -1,55 +1,62 @@
-import { useRef } from 'react'
-import FrameCanvas from './components/FrameCanvas'
-import RevealStage from './components/RevealStage'
 import GlyphRain from './components/GlyphRain'
 import Thunder from './components/Thunder'
-import { useInView, useScrollProgress, useSampled } from './lib/useInView'
+import { useScrollProgress, useSampled } from './lib/useInView'
 
-const GLYPHS = '無下限呪術廻戦五条悟領域展開六眼無限虚式蒼赤紫強者01'
+const CODE_GLYPHS = 'SAWON01<>{}[]/;#*devhackopensourceappweb01'
 
-function AwakenSection() {
+const ROLES = [
+  { title: 'App Developer', sub: 'Native & cross-platform products' },
+  { title: 'Web Developer', sub: 'Modern frontends & full-stack apps' },
+  { title: 'Ethical Hacker', sub: 'Security research & defensive mindset' },
+  { title: 'Open Source', sub: 'Tools, libraries & public projects' },
+]
+
+const STACK = [
+  'React', 'Vite', 'Node', 'Python', 'GitHub', 'Linux', 'API', 'CLI',
+]
+
+function HeroSection() {
   const [sectionRef, progress] = useScrollProgress()
   const phase = useSampled(progress)
 
   return (
-    <section ref={sectionRef} className="awaken" id="awaken">
-      <div className="awaken-sticky">
+    <section ref={sectionRef} className="hero" id="hero">
+      <div className="hero-sticky">
         <GlyphRain
-          glyphs={GLYPHS}
+          glyphs={CODE_GLYPHS}
           color="#1b2a44"
           headColor="#5aa8e8"
-          opacity={0.32}
-          speed={34}
-          density={0.55}
-          fontSize={16}
+          opacity={0.28}
+          speed={28}
+          density={0.5}
+          fontSize={15}
         />
-        <FrameCanvas name="awaken" progressRef={progress} ease={0.14} focusY={0.42} />
 
-        <div className="awaken-ui">
+        <div className="hero-ui">
           <p className="kicker">
-            <span className="jp">呪術廻戦</span>
+            <span className="mono">portfolio</span>
             <span className="rule" />
-            Jujutsu Kaisen
+            sawon2026
           </p>
 
-          <h1 className="awaken-title" style={{ '--p': phase }}>
-            <span className="jp-huge" aria-hidden="true">六眼</span>
-            <span className="latin">SIX EYES</span>
+          <h1 className="hero-title" style={{ '--p': phase }}>
+            <span className="name-huge">SA W ON</span>
+            <span className="name-sub">builder · hacker · open source</span>
           </h1>
 
-          <p className="awaken-sub">
-            The strongest sorcerer.
+          <p className="hero-lead">
+            I build apps, websites, tools and open-source projects.
             <br />
-            <em>Keep scrolling — the eyes open.</em>
+            <em>Scroll — meet the work.</em>
           </p>
 
           <div className="scroll-cue" data-done={phase > 0.9 ? 'true' : 'false'}>
-            <span className="jp">下へ</span>
+            <span className="mono">scroll</span>
             <span className="cue-line" />
           </div>
         </div>
 
-        <div className="awaken-meter" aria-hidden="true">
+        <div className="meter" aria-hidden="true">
           <span style={{ transform: `scaleY(${phase})` }} />
         </div>
       </div>
@@ -57,41 +64,52 @@ function AwakenSection() {
   )
 }
 
-function DomainSection() {
+function RolesSection() {
   const [sectionRef, progress] = useScrollProgress()
-  const [inViewRef, inView] = useInView(0.3)
   const phase = useSampled(progress)
 
   return (
-    <section className="monarch" id="domain" ref={sectionRef}>
-      <div className="monarch-sticky" ref={inViewRef}>
-        <FrameCanvas name="domain" progressRef={progress} ease={0.16} />
-
+    <section className="roles" id="roles" ref={sectionRef}>
+      <div className="roles-sticky">
         <GlyphRain
-          glyphs={GLYPHS}
+          glyphs={CODE_GLYPHS}
           color="#2f4d7a"
           headColor="#7fd8ff"
-          opacity={0.42}
-          speed={64}
+          opacity={0.35}
+          speed={48}
         />
 
-        <div className="monarch-ui">
+        <div className="roles-ui">
           <p className="kicker light">
             <span className="rule" />
-            <span className="jp">領域展開</span>
+            <span className="mono">what I do</span>
           </p>
-          <h2 className="monarch-title">
-            <span className="latin">UNLIMITED</span>
-            <span className="latin outline">VOID</span>
-          </h2>
-          <p className="monarch-sub">
-            <span className="jp">無量空処</span>
-            <br />
-            Keep scrolling — the domain expands.
-          </p>
+
+          <ul className="role-list" style={{ '--p': phase }}>
+            {ROLES.map((r, i) => (
+              <li
+                key={r.title}
+                className="role-item"
+                style={{ '--i': i }}
+                data-active={phase > i / ROLES.length ? 'true' : 'false'}
+              >
+                <span className="role-idx">0{i + 1}</span>
+                <div>
+                  <h2>{r.title}</h2>
+                  <p>{r.sub}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="stack">
+            {STACK.map((s) => (
+              <span key={s} className="chip">{s}</span>
+            ))}
+          </div>
         </div>
 
-        <div className="monarch-meter" aria-hidden="true">
+        <div className="meter" aria-hidden="true">
           <span style={{ transform: `scaleY(${phase})` }} />
         </div>
       </div>
@@ -99,31 +117,56 @@ function DomainSection() {
   )
 }
 
-function RevealSection() {
+function AboutSection() {
   return (
-    <section className="reveal" id="reveal">
-      <RevealStage
-        bottom={`${import.meta.env.BASE_URL}img/gojo-sealed.webp`}
-        top={`${import.meta.env.BASE_URL}img/gojo-awakened.webp`}
-      />
-      <div className="reveal-head">
+    <section className="about" id="about">
+      <div className="about-inner">
         <p className="kicker light">
           <span className="rule" />
-          <span className="jp">二つの顔</span>
+          <span className="mono">about</span>
         </p>
-        <h2 className="reveal-title">
-          <span className="latin">THE STRONGEST</span>
-          <span className="jp-mid">最強</span>
+
+        <h2 className="about-title">
+          <span className="latin">CODE</span>
+          <span className="accent">+</span>
+          <span className="latin">CRAFT</span>
         </h2>
-        <p className="reveal-sub">
-          Sweep the portrait. Blindfold on. Six Eyes open.
+
+        <p className="about-body">
+          I&apos;m <strong>SA W ON</strong> — app developer, web developer, ethical hacker,
+          and open-source creator on GitHub. I ship tools, experiment with security,
+          and build products end-to-end.
         </p>
+
+        <div className="about-grid">
+          <a
+            className="card"
+            href="https://github.com/sawon2026"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="card-label">GitHub</span>
+            <span className="card-value">@sawon2026</span>
+            <span className="card-hint">tools · repos · open source</span>
+          </a>
+          <div className="card">
+            <span className="card-label">Focus</span>
+            <span className="card-value">Full-stack + security</span>
+            <span className="card-hint">apps · web · ethical hacking</span>
+          </div>
+          <div className="card">
+            <span className="card-label">Status</span>
+            <span className="card-value">Building in public</span>
+            <span className="card-hint">shipping projects continuously</span>
+          </div>
+        </div>
+
+        <footer className="foot">
+          <span className="mono">SA W ON</span>
+          <span className="foot-rule" />
+          <span>portfolio · clean systems</span>
+        </footer>
       </div>
-      <footer className="foot">
-        <span className="jp">五条 悟</span>
-        <span className="foot-rule" />
-        <span>GOJO SATORU — fan tribute</span>
-      </footer>
     </section>
   )
 }
@@ -131,10 +174,10 @@ function RevealSection() {
 export default function App() {
   return (
     <main>
-      <Thunder interval={600} />
-      <AwakenSection />
-      <DomainSection />
-      <RevealSection />
+      <Thunder interval={900} flash={0.08} />
+      <HeroSection />
+      <RolesSection />
+      <AboutSection />
     </main>
   )
 }
