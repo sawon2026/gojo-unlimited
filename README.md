@@ -1,14 +1,14 @@
 # SA W ON — Portfolio
 
-Scroll-driven cinematic portfolio for **SA W ON** (`@sawon2026`).
+Scroll-driven cinematic portfolio with a **3D interactive robot**.
 
-- App developer · Web developer · Ethical hacker · Open source creator
-- Sticky scroll acts + glyph rain + thunder
-- Typography-first (no heavy image sequences required)
+- **SA W ON** — app / web developer, ethical hacker, open source
+- Sticky scroll sections + glyph rain + thunder
+- Right-side **Three.js robot**: drag to rotate, reacts to scroll & section
 
 ```bash
 npm install
 npm run dev
 ```
 
-GitHub Pages base: `/gojo-unlimited/`
+GitHub Pages base path: `/gojo-unlimited/`

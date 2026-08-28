@@ -285,3 +285,74 @@ a.card:hover {
   html { scroll-behavior: auto; }
   .cue-line { animation: none; }
 }
+
+/* ——— 3D ROBOT (fixed right) ——— */
+.robot-stage {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 20;
+  width: min(42vw, 480px);
+  height: 100vh;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+.robot-stage:active { cursor: grabbing; }
+.robot-stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.robot-hint {
+  position: absolute;
+  bottom: 1.4rem;
+  right: 1.4rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(143, 160, 189, 0.7);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* leave room for robot on desktop */
+.hero-ui,
+.roles-ui {
+  max-width: calc(100% - min(42vw, 480px));
+}
+.about-inner {
+  max-width: min(900px, calc(100% - min(38vw, 420px)));
+  margin-left: 0;
+}
+
+@media (max-width: 900px) {
+  .robot-stage {
+    width: min(48vw, 280px);
+    opacity: 0.95;
+  }
+  .hero-ui,
+  .roles-ui {
+    max-width: calc(100% - min(48vw, 280px));
+  }
+}
+
+@media (max-width: 640px) {
+  .robot-stage {
+    width: 100%;
+    height: 38vh;
+    top: auto;
+    bottom: 0;
+    opacity: 0.9;
+    mask-image: linear-gradient(to top, #000 55%, transparent);
+    -webkit-mask-image: linear-gradient(to top, #000 55%, transparent);
+  }
+  .hero-ui,
+  .roles-ui {
+    max-width: 100%;
+  }
+  .about-inner {
+    max-width: 100%;
+  }
+  .robot-hint { display: none; }
+}

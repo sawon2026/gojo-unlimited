@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import GlyphRain from './components/GlyphRain'
 import Thunder from './components/Thunder'
+import Robot3D from './components/Robot3D'
 import { useScrollProgress, useSampled } from './lib/useInView'
 
 const CODE_GLYPHS = 'SAWON01<>{}[]/;#*devhackopensourceappweb01'
@@ -14,6 +16,47 @@ const ROLES = [
 const STACK = [
   'React', 'Vite', 'Node', 'Python', 'GitHub', 'Linux', 'API', 'CLI',
 ]
+
+function useActiveSection() {
+  const [section, setSection] = useState(0)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const ids = ['hero', 'roles', 'about']
+    const onScroll = () => {
+      const mid = window.innerHeight * 0.35
+      let active = 0
+      let best = Infinity
+      ids.forEach((id, i) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        const r = el.getBoundingClientRect()
+        const dist = Math.abs(r.top + r.height * 0.2 - mid)
+        if (dist < best) {
+          best = dist
+          active = i
+        }
+      })
+      setSection(active)
+      const el = document.getElementById(ids[active])
+      if (el) {
+        const r = el.getBoundingClientRect()
+        const total = el.offsetHeight - window.innerHeight
+        const scrolled = Math.min(Math.max(-r.top, 0), Math.max(total, 1))
+        setProgress(total > 0 ? scrolled / total : 0)
+      }
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  return { section, progress }
+}
 
 function HeroSection() {
   const [sectionRef, progress] = useScrollProgress()
@@ -172,9 +215,12 @@ function AboutSection() {
 }
 
 export default function App() {
+  const { section, progress } = useActiveSection()
+
   return (
     <main>
       <Thunder interval={900} flash={0.08} />
+      <Robot3D section={section} progress={progress} />
       <HeroSection />
       <RolesSection />
       <AboutSection />
