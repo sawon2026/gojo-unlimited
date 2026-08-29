@@ -14,4 +14,4 @@ npm install
 npm run dev
 ```
 
-GitHub Pages base: `/gojo-unlimited/`
+GitHub Pages base: `/sawon-portfolio/`
