@@ -7,14 +7,42 @@ import { useScrollProgress, useSampled } from './lib/useInView'
 const CODE_GLYPHS = 'SAWON01<>{}[]/;#*devhackopensourceappweb01'
 
 const ROLES = [
-  { title: 'App Developer', sub: 'Native & cross-platform products' },
-  { title: 'Web Developer', sub: 'Modern frontends & full-stack apps' },
-  { title: 'Ethical Hacker', sub: 'Security research & defensive mindset' },
-  { title: 'Open Source', sub: 'Tools, libraries & public projects' },
+  {
+    title: 'App Developer',
+    sub: 'Native and cross-platform products with clean architecture.',
+  },
+  {
+    title: 'Web Developer',
+    sub: 'Modern frontends, APIs, and full-stack delivery.',
+  },
+  {
+    title: 'Ethical Hacker',
+    sub: 'Security research, defensive mindset, responsible testing.',
+  },
+  {
+    title: 'Open Source',
+    sub: 'Public tools, libraries, and GitHub projects in the open.',
+  },
 ]
 
-const STACK = [
-  'React', 'Vite', 'Node', 'Python', 'GitHub', 'Linux', 'API', 'CLI',
+const STACK = ['React', 'Vite', 'Node', 'Python', 'Linux', 'GitHub', 'API', 'CLI']
+
+const PROJECTS = [
+  {
+    name: 'HEXVault',
+    blurb: 'Security-minded tooling and open modules.',
+    href: 'https://github.com/sawon2026',
+  },
+  {
+    name: 'Portfolio Lab',
+    blurb: 'Scroll-cinematic interfaces and interactive 3D.',
+    href: 'https://github.com/sawon2026/gojo-unlimited',
+  },
+  {
+    name: 'Public Repos',
+    blurb: 'Experiments, CLIs, and builder utilities.',
+    href: 'https://github.com/sawon2026?tab=repositories',
+  },
 ]
 
 function useActiveSection() {
@@ -22,7 +50,7 @@ function useActiveSection() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const ids = ['hero', 'roles', 'about']
+    const ids = ['hero', 'roles', 'work', 'contact']
     const onScroll = () => {
       const mid = window.innerHeight * 0.35
       let active = 0
@@ -37,7 +65,7 @@ function useActiveSection() {
           active = i
         }
       })
-      setSection(active)
+      setSection(Math.min(active, 2))
       const el = document.getElementById(ids[active])
       if (el) {
         const r = el.getBoundingClientRect()
@@ -67,35 +95,49 @@ function HeroSection() {
       <div className="hero-sticky">
         <GlyphRain
           glyphs={CODE_GLYPHS}
-          color="#1b2a44"
-          headColor="#5aa8e8"
-          opacity={0.28}
-          speed={28}
-          density={0.5}
-          fontSize={15}
+          color="#1e293b"
+          headColor="#38bdf8"
+          opacity={0.22}
+          speed={26}
+          density={0.45}
+          fontSize={14}
         />
 
         <div className="hero-ui">
           <p className="kicker">
             <span className="mono">portfolio</span>
-            <span className="rule" />
-            sawon2026
+            <span className="rule" aria-hidden="true" />
+            <span>sawon2026</span>
           </p>
 
           <h1 className="hero-title" style={{ '--p': phase }}>
             <span className="name-huge">SA W ON</span>
-            <span className="name-sub">builder · hacker · open source</span>
+            <span className="name-sub">App · Web · Security · Open Source</span>
           </h1>
 
           <p className="hero-lead">
-            I build apps, websites, tools and open-source projects.
+            I build products, tools, and public projects with a security-first mindset.
             <br />
-            <em>Scroll — meet the work.</em>
+            <em>Scroll to explore.</em>
           </p>
+
+          <div className="hero-actions">
+            <a className="btn btn-primary" href="#work">
+              View work
+            </a>
+            <a
+              className="btn btn-ghost"
+              href="https://github.com/sawon2026"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
 
           <div className="scroll-cue" data-done={phase > 0.9 ? 'true' : 'false'}>
             <span className="mono">scroll</span>
-            <span className="cue-line" />
+            <span className="cue-line" aria-hidden="true" />
           </div>
         </div>
 
@@ -116,27 +158,28 @@ function RolesSection() {
       <div className="roles-sticky">
         <GlyphRain
           glyphs={CODE_GLYPHS}
-          color="#2f4d7a"
-          headColor="#7fd8ff"
-          opacity={0.35}
-          speed={48}
+          color="#334155"
+          headColor="#7dd3fc"
+          opacity={0.28}
+          speed={42}
         />
 
         <div className="roles-ui">
           <p className="kicker light">
-            <span className="rule" />
+            <span className="rule" aria-hidden="true" />
             <span className="mono">what I do</span>
           </p>
 
-          <ul className="role-list" style={{ '--p': phase }}>
+          <ul className="role-list">
             {ROLES.map((r, i) => (
               <li
                 key={r.title}
                 className="role-item"
-                style={{ '--i': i }}
                 data-active={phase > i / ROLES.length ? 'true' : 'false'}
               >
-                <span className="role-idx">0{i + 1}</span>
+                <span className="role-idx" aria-hidden="true">
+                  0{i + 1}
+                </span>
                 <div>
                   <h2>{r.title}</h2>
                   <p>{r.sub}</p>
@@ -145,9 +188,11 @@ function RolesSection() {
             ))}
           </ul>
 
-          <div className="stack">
+          <div className="stack" aria-label="Tech stack">
             {STACK.map((s) => (
-              <span key={s} className="chip">{s}</span>
+              <span key={s} className="chip">
+                {s}
+              </span>
             ))}
           </div>
         </div>
@@ -160,54 +205,72 @@ function RolesSection() {
   )
 }
 
-function AboutSection() {
+function WorkSection() {
   return (
-    <section className="about" id="about">
-      <div className="about-inner">
+    <section className="work" id="work">
+      <div className="work-inner">
         <p className="kicker light">
-          <span className="rule" />
-          <span className="mono">about</span>
+          <span className="rule" aria-hidden="true" />
+          <span className="mono">selected work</span>
+        </p>
+        <h2 className="section-title">Projects & public builds</h2>
+        <p className="section-lead">
+          Shipping in public — tools, experiments, and production-minded repos.
         </p>
 
-        <h2 className="about-title">
-          <span className="latin">CODE</span>
-          <span className="accent">+</span>
-          <span className="latin">CRAFT</span>
-        </h2>
+        <ul className="project-grid">
+          {PROJECTS.map((p) => (
+            <li key={p.name}>
+              <a
+                className="project-card"
+                href={p.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="card-label">GitHub</span>
+                <span className="card-title">{p.name}</span>
+                <span className="card-body">{p.blurb}</span>
+                <span className="card-cta">Open repository →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
 
-        <p className="about-body">
-          I&apos;m <strong>SA W ON</strong> — app developer, web developer, ethical hacker,
-          and open-source creator on GitHub. I ship tools, experiment with security,
-          and build products end-to-end.
+function ContactSection() {
+  return (
+    <section className="contact" id="contact">
+      <div className="contact-inner">
+        <p className="kicker light">
+          <span className="rule" aria-hidden="true" />
+          <span className="mono">connect</span>
+        </p>
+        <h2 className="section-title">Let&apos;s build</h2>
+        <p className="section-lead">
+          Available for apps, web products, security-minded builds, and open collaboration.
         </p>
 
-        <div className="about-grid">
+        <div className="contact-actions">
           <a
-            className="card"
+            className="btn btn-primary"
             href="https://github.com/sawon2026"
             target="_blank"
             rel="noreferrer"
           >
-            <span className="card-label">GitHub</span>
-            <span className="card-value">@sawon2026</span>
-            <span className="card-hint">tools · repos · open source</span>
+            Follow on GitHub
           </a>
-          <div className="card">
-            <span className="card-label">Focus</span>
-            <span className="card-value">Full-stack + security</span>
-            <span className="card-hint">apps · web · ethical hacking</span>
-          </div>
-          <div className="card">
-            <span className="card-label">Status</span>
-            <span className="card-value">Building in public</span>
-            <span className="card-hint">shipping projects continuously</span>
-          </div>
+          <a className="btn btn-ghost" href="https://github.com/sawon2026?tab=repositories">
+            Browse repos
+          </a>
         </div>
 
         <footer className="foot">
           <span className="mono">SA W ON</span>
-          <span className="foot-rule" />
-          <span>portfolio · clean systems</span>
+          <span className="foot-rule" aria-hidden="true" />
+          <span>builder · hacker · open source</span>
         </footer>
       </div>
     </section>
@@ -219,11 +282,15 @@ export default function App() {
 
   return (
     <main>
-      <Thunder interval={900} flash={0.08} />
+      <a className="skip-link" href="#hero">
+        Skip to content
+      </a>
+      <Thunder interval={1000} flash={0.06} />
       <Robot3D section={section} progress={progress} />
       <HeroSection />
       <RolesSection />
-      <AboutSection />
+      <WorkSection />
+      <ContactSection />
     </main>
   )
 }

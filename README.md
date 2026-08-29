@@ -1,14 +1,17 @@
 # SA W ON — Portfolio
 
-Scroll-driven cinematic portfolio with a **3D interactive robot**.
+Dark cinematic developer portfolio for **SA W ON** (`@sawon2026`).
 
-- **SA W ON** — app / web developer, ethical hacker, open source
-- Sticky scroll sections + glyph rain + thunder
-- Right-side **Three.js robot**: drag to rotate, reacts to scroll & section
+Built with **ui-ux-pro-max** design guidance:
+
+- Pattern: Hero + Roles + Work + CTA
+- Tokens: slate dark surface, sky CTA (`#38bdf8`), Inter + Anton display
+- Accessibility: focus rings, skip link, reduced motion, contrast-aware
+- Interactive **3D cyborg** (drag to rotate, scroll-reactive)
 
 ```bash
 npm install
 npm run dev
 ```
 
-GitHub Pages base path: `/gojo-unlimited/`
+GitHub Pages base: `/gojo-unlimited/`
